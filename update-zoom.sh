@@ -26,7 +26,6 @@
 # digest-algo SHA512
 #
 # This will prevent apt from complaining that you have insufficient security
-
 cd /var/www/html/debian
 wget https://zoom.us/client/latest/zoom_amd64.deb -O /tmp/zoom_amd64.deb
 if [ "$(md5sum -c ~/zoom.md5)" != "/tmp/zoom_amd64.deb: OK" ]; then
@@ -46,14 +45,8 @@ if [ "$(md5sum -c ~/zoom.md5)" != "/tmp/zoom_amd64.deb: OK" ]; then
         apt-ftparchive -oAPT::FTPArchive::Release::Suite=stable -oAPT::FTPArchive::Release::Codename=stable -oAPT::FTPArchive::Release::Architectures=amd64 -oAPT::FTPArchive::Release::Components=main release . > Release
 
         # Create the signed Release files
-        # 
-        # TODO: I still need to figure out how to automate this without
-        # hardcoding the password.  However, this key is only used
-        # to do this step and only because apt gets mad if you use an
-        # unsigned Release file.  This is definitely a less than
-        # ideal practice for this portion.
-        gpg --default-key F1C57AB70A1FAEE1A90C2615AEFB6151DD129BCA --passphrase signmydist --batch --yes -abs -o Release.gpg Release
-        gpg --default-key F1C57AB70A1FAEE1A90C2615AEFB6151DD129BCA --passphrase signmydist --batch --yes --clearsign -o InRelease Release
+        gpg --default-key $1 --passphrase-file ~/zoom_passphrase.txt --batch --yes -abs -o Release.gpg Release
+        gpg --default-key $1 --passphrase-file ~/zoom_passphrase.txt --batch --yes --clearsign -o InRelease Release
 
         echo "$(date +"%D"): Completed updating zoom package repo" | tee -a /var/log/zoom_update.log
 
