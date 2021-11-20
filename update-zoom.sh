@@ -29,7 +29,7 @@
 #
 # Running this file requires passing your signing-key id as an argument
 cd /var/www/html/debian
-wget https://zoom.us/client/latest/zoom_amd64.deb -O /tmp/zoom_amd64.deb
+wget https://zoom.us/client/latest/zoom_amd64.deb -q -O /tmp/zoom_amd64.deb
 if [ "$(md5sum -c ~/zoom.md5)" != "/tmp/zoom_amd64.deb: OK" ]; then
     echo "$(date +"%D"): Updating zoom package repo" | tee -a /var/log/zoom_update.log
 
@@ -58,4 +58,5 @@ if [ "$(md5sum -c ~/zoom.md5)" != "/tmp/zoom_amd64.deb: OK" ]; then
 
 else
     echo "$(date +"%D"): No updates needed" | tee -a /var/log/zoom_update.log
+    rm /tmp/zoom_amd64.deb
 fi
