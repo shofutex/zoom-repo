@@ -26,6 +26,8 @@
 # digest-algo SHA512
 #
 # This will prevent apt from complaining that you have insufficient security
+#
+# Running this file requires passing your signing-key id as an argument
 cd /var/www/html/debian
 wget https://zoom.us/client/latest/zoom_amd64.deb -O /tmp/zoom_amd64.deb
 if [ "$(md5sum -c ~/zoom.md5)" != "/tmp/zoom_amd64.deb: OK" ]; then
