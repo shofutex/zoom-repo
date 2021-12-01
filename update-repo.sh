@@ -1,7 +1,6 @@
 #!/bin/bash
 #
 cd /var/www/html/debian
-wget "$2" -O /var/www/html/debian/pool/main/$3
         
 # This will give off some warnings, but it's usable
 apt-ftparchive packages . > dists/stable/main/binary-amd64/Packages
